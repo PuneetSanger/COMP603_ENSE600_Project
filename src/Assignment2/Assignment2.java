@@ -6,7 +6,6 @@ package Assignment2;
  */
 public class Assignment2 
 {
-
     /**
      * @param args the command line arguments
      */
@@ -14,6 +13,5 @@ public class Assignment2
     {
         // TODO code application logic here
         System.out.println("Puneet");
-    }
-    
+    }   
 }
