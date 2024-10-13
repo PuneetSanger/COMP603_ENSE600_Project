@@ -1,11 +1,16 @@
 package GUI;
 
+import java.awt.GridLayout;
+import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Connect4Game 
 {
     
     private JFrame frame;                                       //The main game frame
+    private JPanel buttonPanel;
 
     //Constructor to set up the JFrame
     public Connect4Game() 
@@ -21,7 +26,7 @@ public class Connect4Game
         frame.add(boardGrid);                       //Add the grid to the JFrame
         
         
-        frame.setVisible(true);                     //Make the frame visible
+        frame.setVisible(true);                     //Make the frame visible  
     }
 
     // Main method to create an instance of Connect4Game and show the frame
