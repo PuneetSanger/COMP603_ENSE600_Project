@@ -6,18 +6,19 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 /**
- * This class creates the Counter that will be used in other classes
+ * This class creates the Counter that will be further used to create the board grid
  * 
  */
 public class Counter extends JPanel
 {
-    private int player;
-    private Color colour;           //Import java color library, will control the colour of the disk
+    private final int player;
+    private final Color colour;           //Import java color library, will control the colour of the disk
     
     public Counter(int player)
     {
         this.player = player;
-        this.colour = Color.WHITE;                  //All counters start off as white in the grid  
+        this.colour = Color.WHITE;                  //All counters start off as white in the grid 
+        this.setBackground(Color.BLUE);
         setPreferredSize(new Dimension(100,100));   //Set size for the counter        
     }
     
@@ -30,7 +31,6 @@ public class Counter extends JPanel
         g.fillOval(10, 10, getWidth() - 20, getHeight() - 20);   //Create circle 
     }
 
-    
     public int getPlayer()
     {
         return player;
