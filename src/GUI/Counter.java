@@ -12,16 +12,15 @@ import javax.swing.JPanel;
 public class Counter extends JPanel
 {
     private final int player;
-    private final Color colour;           //Import java color library, will control the colour of the disk
+    private Color colour;           //Import java color library, will control the colour of the disk
     
     public Counter(int player)
     {
         this.player = player;
         this.colour = Color.WHITE;                  //All counters start off as white in the grid 
-        this.setBackground(Color.BLUE);
+        this.setBackground(Color.BLUE);             //Set colour of background to be blue 
         setPreferredSize(new Dimension(100,100));   //Set size for the counter        
     }
-    
     
     @Override 
     protected void paintComponent(Graphics g)           //Override the paint compoennt and draw the counter as a disk
@@ -40,5 +39,10 @@ public class Counter extends JPanel
     {
         return colour;
     }
-
+    
+    public void setColor(Color newColor)                //Method to repaint the counter 
+    {
+        this.colour = newColor;
+        repaint();
+    }
 }

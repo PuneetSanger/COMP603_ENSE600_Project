@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 public class BoardJFrame 
 {
-    private final JFrame frame;                                       //The main game frame
+    private final JFrame frame;                                       //The main game Jframe
 
     //Constructor to set up the JFrame
     public BoardJFrame() 
@@ -15,8 +15,7 @@ public class BoardJFrame
         
         BoardGrid boardGrid = new BoardGrid();      //Create an instance of BoardGrid
         
-        frame.add(boardGrid);                       //Add the grid to the JFrame
-        
+        frame.add(boardGrid);                       //Add the grid to the JFrame       
         frame.setVisible(true);                     //Make the frame visible  
     }
 }
