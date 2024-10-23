@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 public class Counter extends JPanel
 {
     private final int player;
-    private Color colour;           //Import java color library, will control the colour of the disk
+    private Color colour;           //Import java color library, will control the colour of the disc
     
     public Counter(int player)
     {
@@ -35,12 +35,12 @@ public class Counter extends JPanel
         return player;
     }
     
-    public Color getColor()
+    public Color getColour()
     {
         return colour;
     }
     
-    public void setColor(Color newColor)                //Method to repaint the counter 
+    public void setColour(Color newColor)                //Method to repaint the counter 
     {
         this.colour = newColor;
         repaint();

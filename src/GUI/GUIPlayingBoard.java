@@ -1,11 +1,11 @@
+// GUIPlayingBoard.java
 package GUI;
 
-import GUI.Connect4Board;
 import java.awt.*;
 import javax.swing.*;
 
 public class GUIPlayingBoard extends JPanel {
-    private Connect4Board board;
+    private final Connect4Board board;
     private int currentPlayer;
     private final int cellSize = 100; // Size of each cell
 
@@ -31,9 +31,31 @@ public class GUIPlayingBoard extends JPanel {
         repaint();
     }
 
+    // Method to handle dropping a coin
+    public void dropCoin(int col) {
+        if (board.dropCounter(col, currentPlayer)) {
+            updateGridDisplay(); // Update the GUI after dropping the coin
+            if (board.checkWin()) {
+                JOptionPane.showMessageDialog(this, "Player " + currentPlayer + " wins!");
+                board.resetBoard(); // Reset the board for a new game
+            } else if (board.isBoardFull()) {
+                JOptionPane.showMessageDialog(this, "It's a draw!");
+                board.resetBoard(); // Reset the board for a new game
+            }
+            currentPlayer = (currentPlayer == 1) ? 2 : 1; // Switch turns
+        } else {
+            JOptionPane.showMessageDialog(this, "Column full! Choose another one.");
+        }
+        updateGridDisplay();
+    }
+
+    public int getCellValue(int row, int col) {
+        return board.getCellValue(row, col);
+    }
+
     // Inner class to represent each cell on the board
     class CellPanel extends JPanel {
-        private int row, col;
+        private final int row, col;
 
         public CellPanel(int row, int col) {
             this.row = row;
@@ -66,23 +88,5 @@ public class GUIPlayingBoard extends JPanel {
             int diameter = Math.min(getWidth(), getHeight()) - 20; // Ensure circle fits within cell
             g.fillOval(10, 10, diameter, diameter); // Draw circle with padding
         }
-    }
-
-    // Method to handle dropping a coin
-    public void dropCoin(int col) {
-        if (board.dropCounter(col, currentPlayer)) {
-            updateGridDisplay(); // Update the GUI after dropping the coin
-            if (board.checkWin()) {
-                JOptionPane.showMessageDialog(this, "Player " + currentPlayer + " wins!");
-                board.resetBoard();
-            } else if (board.isBoardFull()) {
-                JOptionPane.showMessageDialog(this, "It's a draw!");
-                board.resetBoard();
-            }
-            currentPlayer = (currentPlayer == 1) ? 2 : 1; // Switch turns
-        } else {
-            JOptionPane.showMessageDialog(this, "Column full! Choose another one.");
-        }
-        updateGridDisplay();
     }
 }
