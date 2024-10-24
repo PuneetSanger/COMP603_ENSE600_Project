@@ -7,12 +7,12 @@ import javax.swing.JPanel;
 
 /**
  * This class creates the Counter that will be further used to create the board grid
- * This class isn't being used right now
+ * 
  */
 public class Counter extends JPanel
 {
     private final int player;
-    private Color colour;           //Import java color library, will control the colour of the disc
+    private Color colour;           //Import java color library, will control the colour of the disk
     
     public Counter(int player)
     {
@@ -21,6 +21,10 @@ public class Counter extends JPanel
         this.setBackground(Color.BLUE);             //Set colour of background to be blue 
         setPreferredSize(new Dimension(100,100));   //Set size for the counter        
     }
+
+//    Counter() {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
     
     @Override 
     protected void paintComponent(Graphics g)           //Override the paint compoennt and draw the counter as a disk
@@ -30,17 +34,17 @@ public class Counter extends JPanel
         g.fillOval(10, 10, getWidth() - 20, getHeight() - 20);   //Create circle 
     }
 
-    public int getPlayer()
+    public int getPlayer()              //Get method for player
     {
         return player;
     }
     
-    public Color getColour()
+    public Color getColor()             //Get method for colour
     {
         return colour;
     }
     
-    public void setColour(Color newColor)                //Method to repaint the counter 
+    public void setColor(Color newColor)                //Method to repaint the counter 
     {
         this.colour = newColor;
         repaint();
