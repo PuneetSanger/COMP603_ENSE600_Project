@@ -8,6 +8,7 @@ package Game;
  *
  * @author jessielord
  */
-public class GameController {
+public class GameController 
+{
     
 }

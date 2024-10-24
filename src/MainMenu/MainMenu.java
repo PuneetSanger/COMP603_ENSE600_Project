@@ -3,10 +3,6 @@ package MainMenu;
 import GUI.BoardGrid;
 import GUI.GUIPlayingBoard;
 
-/**
- *
- * @author puneetsanger
- */
 public class MainMenu extends javax.swing.JFrame 
 {
 
@@ -128,9 +124,9 @@ public class MainMenu extends javax.swing.JFrame
 
     private void singlePlayerButtonPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_singlePlayerButtonPressed
         // TODO add your handling code here:
-
-        
-        
+        GUIPlayingBoard game = new GUIPlayingBoard(true);   //Set GUIPlayingBoard to true for single player 
+        game.setVisible(true);          //Set game to visible 
+        this.dispose();                 //Close the main menu screen
     }//GEN-LAST:event_singlePlayerButtonPressed
 
     private void quitButtonPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonPressed
@@ -139,9 +135,9 @@ public class MainMenu extends javax.swing.JFrame
 
     private void TwoPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TwoPlayerActionPerformed
         // TODO add your handling code here:
-        GUIPlayingBoard game = new GUIPlayingBoard();           //New GUIPlayingBoard game
+        GUIPlayingBoard game = new GUIPlayingBoard(false);      //New GUIPlayingBoard game, false for two player mode
         game.setVisible(true);                                  //Set the game to visible
-        this.dispose();                                         //Close the current main menu                                 
+        this.dispose();                                         //Close the current main menu  
     }//GEN-LAST:event_TwoPlayerActionPerformed
 
     private void LeaderboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LeaderboardButtonActionPerformed

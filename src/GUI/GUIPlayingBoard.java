@@ -1,24 +1,20 @@
 package GUI;
 
-import GUI.BoardGrid;
 import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
+import static java.lang.Math.random;
+import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author puneetsanger
- */
+
 public class GUIPlayingBoard extends javax.swing.JFrame 
 {
-    //new
+
     private BoardGrid boardGrid;
-    private int currentPlayer = 1; // Player 1 starts
+    private int currentPlayer = 1;                  //Player 1 starts
+    private boolean isSinglePlayer = false;         //Create AI player just like in assignment 1
     
-     //Creates new form GUIPlayingBoard
-     
-    public GUIPlayingBoard() 
+    public GUIPlayingBoard(boolean singlePlayer)    //Pass single player player boolean through the constructor 
     {
         initComponents();
         setTitle("Connect 4");                          //Add title to top of frame
@@ -26,6 +22,7 @@ public class GUIPlayingBoard extends javax.swing.JFrame
 
         boardGrid = new BoardGrid();                    //Create BoardGrid
         jPanel1.add(boardGrid, BorderLayout.CENTER);    //Add BoardGrid to JPanel
+        this.isSinglePlayer = singlePlayer;             //Sets GUI playing board for single player mode
     }
     
     //Button actions
@@ -35,22 +32,94 @@ public class GUIPlayingBoard extends javax.swing.JFrame
         {
             if (boardGrid.checkWin()) 
             {
+                //Winner print statement 
                 JOptionPane.showMessageDialog(this, "Player " + currentPlayer + " wins!");
-                boardGrid.resetBoard(); // Reset for new game
+                boardGrid.resetBoard(); //Reset for new game
             } 
             else if (boardGrid.isBoardFull()) 
             {
                 JOptionPane.showMessageDialog(this, "It's a draw!");    //If board is full print statement
-                boardGrid.resetBoard(); // Reset for new game
+                boardGrid.resetBoard(); //Reset for new game
             }
             
             currentPlayer = (currentPlayer == 1) ? 2 : 1; // Switch turns between the two players
+            
+            if (isSinglePlayer && currentPlayer == 2)
+            {
+                //disableButtons();   //Disable buttons so user cannot input before the computer 
+                AIMove();           //Trigger a move from the ai when in single player
+            }
+            
+            //enableButtons();
         } 
         else 
         {
             //Column is full print statement 
             JOptionPane.showMessageDialog(this, "Column full! Choose another one.");
         }
+    }
+    
+//    //Method to disable buttons 
+//    private void disableButtons()
+//    {
+//        Iterable<JButton> Buttons = null;       
+//        for (JButton button : Buttons)
+//        {
+//            button.setEnabled(false);       //Used when the computer is "thinking"
+//        }
+//    }
+//    
+//    //Method to enable buttons for user input 
+//    private void enableButtons()
+//    {
+//        Iterable<JButton> Buttons = null;
+//        for(JButton button : Buttons)
+//        {
+//            button.setEnabled(true);
+//        }
+//    }
+    
+    private void AIMove()       //Create a method that handles the movement of the computer 
+    {                           //for single player mode
+        //new Thread(() -> {
+        
+            //try 
+            //{
+                //Thread.sleep(1500);         //1.5 second delay caused by threads
+                                            //Simulates to the human user that the ai
+                int aiMove;                 //is "thinking"
+                Random random = new Random();
+        
+            do
+            {
+                aiMove = random.nextInt(7);       //Set move of the computer to a integer between 0 and 6
+            } while (!boardGrid.dropCoin(aiMove, currentPlayer));
+        
+                if (boardGrid.checkWin())
+                {   
+                    //Ai winner print statement 
+                    JOptionPane.showMessageDialog(this, "The Computer wins!");
+                    boardGrid.resetBoard();     //Reset for new game    
+                }
+        
+                else if (boardGrid.isBoardFull())
+                {
+                    JOptionPane.showMessageDialog(this, "It's a draw!");    //If board is full print statement
+                    boardGrid.resetBoard(); //Reset for new game
+                }
+        
+                else 
+                {
+                    currentPlayer = 1;      //Switch back to the human player 
+                } 
+            
+        //} catch(InterruptedException e)
+            //{
+                //e.printStackTrace();
+            //}   
+       
+        //}).start();
+        
     }
     
 
@@ -266,7 +335,7 @@ public class GUIPlayingBoard extends javax.swing.JFrame
             @Override
             public void run() 
             {
-                new GUIPlayingBoard().setVisible(true);
+                new GUIPlayingBoard(true).setVisible(true);
             }
         });
     }
@@ -281,4 +350,5 @@ public class GUIPlayingBoard extends javax.swing.JFrame
     private javax.swing.JButton jButton7;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
 }
