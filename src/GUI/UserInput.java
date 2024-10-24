@@ -6,11 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.function.Consumer;
 
-public class UserInput extends JFrame {
+public class UserInput extends JFrame 
+{
     private JTextField nameField;
     private JLabel promptLabel;
 
-    public UserInput(String prompt, Consumer<String> onNameEntered) {
+    public UserInput(String prompt, Consumer<String> onNameEntered) 
+    {
         setTitle("Name Entry");
         setLayout(new FlowLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,9 +26,11 @@ public class UserInput extends JFrame {
         add(nameField);
 
         // Add action listener for enter key
-        nameField.addActionListener(new ActionListener() {
+        nameField.addActionListener(new ActionListener() 
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) 
+            {
                 String name = nameField.getText();
                 onNameEntered.accept(name); // Pass the name to the callback
                 dispose(); // Close the input window after submission
@@ -40,7 +44,8 @@ public class UserInput extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         SwingUtilities.invokeLater(() -> new UserInput("Enter your name:", name -> {
             JOptionPane.showMessageDialog(null, "Hello, " + name + "!");
         }));

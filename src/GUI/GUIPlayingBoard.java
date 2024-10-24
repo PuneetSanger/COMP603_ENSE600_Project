@@ -4,19 +4,23 @@ package GUI;
 import java.awt.*;
 import javax.swing.*;
 
-public class GUIPlayingBoard extends JPanel {
+public class GUIPlayingBoard extends JPanel 
+{
     private final Connect4Board board;
     private int currentPlayer;
     private final int cellSize = 100; // Size of each cell
 
-    public GUIPlayingBoard() {
+    public GUIPlayingBoard() 
+    {
         board = new Connect4Board();
         currentPlayer = 1; // Player 1 starts
         setLayout(new GridLayout(6, 7)); // 6 rows, 7 columns for Connect 4 grid
 
         // Initialize the grid with panels to represent the cells
-        for (int row = 0; row < 6; row++) {
-            for (int col = 0; col < 7; col++) {
+        for (int row = 0; row < 6; row++) 
+        {
+            for (int col = 0; col < 7; col++) 
+            {
                 add(new CellPanel(row, col));
             }
         }
@@ -26,38 +30,52 @@ public class GUIPlayingBoard extends JPanel {
     }
 
     // Method to update the visual representation of the grid
-    public void updateGridDisplay() {
+    public void updateGridDisplay() 
+    {
         revalidate();
         repaint();
     }
 
     // Method to handle dropping a coin
-    public void dropCoin(int col) {
-        if (board.dropCounter(col, currentPlayer)) {
+    public void dropCoin(int col) 
+    {
+        if (board.dropCounter(col, currentPlayer)) 
+        {
             updateGridDisplay(); // Update the GUI after dropping the coin
-            if (board.checkWin()) {
+            if (board.checkWin()) 
+            {
                 JOptionPane.showMessageDialog(this, "Player " + currentPlayer + " wins!");
                 board.resetBoard(); // Reset the board for a new game
-            } else if (board.isBoardFull()) {
+            }
+            
+            else if (board.isBoardFull()) 
+            {
                 JOptionPane.showMessageDialog(this, "It's a draw!");
                 board.resetBoard(); // Reset the board for a new game
             }
             currentPlayer = (currentPlayer == 1) ? 2 : 1; // Switch turns
-        } else {
+        } 
+        
+        else 
+        {
             JOptionPane.showMessageDialog(this, "Column full! Choose another one.");
         }
+        
         updateGridDisplay();
     }
 
-    public int getCellValue(int row, int col) {
+    public int getCellValue(int row, int col) 
+    {
         return board.getCellValue(row, col);
     }
 
     // Inner class to represent each cell on the board
-    class CellPanel extends JPanel {
+    class CellPanel extends JPanel 
+    {
         private final int row, col;
 
-        public CellPanel(int row, int col) {
+        public CellPanel(int row, int col) 
+        {
             this.row = row;
             this.col = col;
             setBackground(Color.BLUE); // Background color for the board
@@ -65,19 +83,23 @@ public class GUIPlayingBoard extends JPanel {
         }
 
         @Override
-        protected void paintComponent(Graphics g) {
+        protected void paintComponent(Graphics g) 
+        {
             super.paintComponent(g);
 
             // Draw white circle for an empty cell, yellow for player 1, red for player 2
             int cellValue = board.getCellValue(row, col);
+            
             Color coinColor;
-            switch (cellValue) {
+            switch (cellValue) 
+            {
                 case 1: // Player 1
                     coinColor = Color.YELLOW;
                     break;
                 case 2: // Player 2
                     coinColor = Color.RED;
                     break;
+                    
                 default: // Empty cell
                     coinColor = Color.WHITE;
                     break;

@@ -4,14 +4,16 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import GUI.TwoPlayerLauncher;
-import GUI.OnePlayer;
+import GUI.SinglePlayer;
 import GUI.UserInput;
 import Database.Player1One;
 import Database.Player1Two;
 import Database.Player2Two;
 
-public class MainMenu extends JFrame {
-    public MainMenu() {
+public class MainMenu extends JFrame 
+{
+    public MainMenu() 
+    {
         setTitle("Connect 4 - Main Menu");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,10 +35,11 @@ public class MainMenu extends JFrame {
         gbc.gridwidth = 1; // Reset for buttons
         gbc.gridy = 1;
 
-        // Single Player Button
-        JButton onePlayerButton = new JButton("One Player");
+        // Single Player Mode Button
+        JButton onePlayerButton = new JButton("Single Player");
         onePlayerButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        onePlayerButton.addActionListener(new ActionListener() {
+        onePlayerButton.addActionListener(new ActionListener() 
+        {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Ask for Player 1's name
@@ -45,18 +48,20 @@ public class MainMenu extends JFrame {
                     JOptionPane.showMessageDialog(MainMenu.this, "Hello, " + player1.getName() + "! You are playing with the yellow coin.");
 
                     // Launch the One Player game
-                    new OnePlayer();
+                    new SinglePlayer();
                     dispose(); // Close the main menu
                 });
             }
         });
+        
         add(onePlayerButton, gbc);
 
-        // Two Player Button
+        //Two Player Mode Button
         gbc.gridy = 2;
         JButton twoPlayerButton = new JButton("Two Player");
         twoPlayerButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        twoPlayerButton.addActionListener(new ActionListener() {
+        twoPlayerButton.addActionListener(new ActionListener() 
+        {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Ask for Player 1's name

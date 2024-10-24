@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 
 /**
  * This class creates the Counter that will be further used to create the board grid
- * 
+ * This class isn't being used right now
  */
 public class Counter extends JPanel
 {
