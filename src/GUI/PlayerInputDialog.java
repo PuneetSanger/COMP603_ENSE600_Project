@@ -21,7 +21,7 @@ public class PlayerInputDialog extends JDialog
     private String player2Name;
     private boolean isTwoPlayerMode;
 
-    public PlayerInputDialog(JFrame parent) 
+    public PlayerInputDialog(JFrame parent, boolean isTwoPlayerMode) 
     {
         super(parent, "Enter Player Name:", true);      //Enter a name for single player
         this.isTwoPlayerMode = isTwoPlayerMode;

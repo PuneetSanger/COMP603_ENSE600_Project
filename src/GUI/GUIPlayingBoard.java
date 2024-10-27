@@ -32,8 +32,12 @@ public class GUIPlayingBoard extends javax.swing.JFrame
         this.player2Name = player2Name;
     }
 
-    public GUIPlayingBoard(boolean b, String playerName) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public GUIPlayingBoard(boolean isSinglePlayer, String player1Name, String player2Name)
+    {
+        this.isSinglePlayer = isSinglePlayer;
+        this.player1Name = player1Name;
+        this.player2Name = player2Name;
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     //Button actions
