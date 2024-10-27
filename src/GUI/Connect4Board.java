@@ -104,7 +104,7 @@ public class Connect4Board
         return true;
     }
     
-
+    //This method checks whether or not the board is full
     public boolean isBoardFull() 
     {
         for (int col = 0; col < COLS; col++) 
@@ -117,6 +117,7 @@ public class Connect4Board
         return true;
     }
 
+    //This method resets the board and replaces it with empty counters
     public void resetBoard() 
     {
         for (int row = 0; row < ROWS; row++) 

@@ -1,10 +1,14 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import static java.lang.Math.random;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Random;
-import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 
 
 public class GUIPlayingBoard extends javax.swing.JFrame 
@@ -13,16 +17,21 @@ public class GUIPlayingBoard extends javax.swing.JFrame
     private BoardGrid boardGrid;
     private int currentPlayer = 1;                  //Player 1 starts
     private boolean isSinglePlayer = false;         //Create AI player just like in assignment 1
+    private String player1Name;
+    private String player2Name;
     
     public GUIPlayingBoard(boolean singlePlayer)    //Pass single player player boolean through the constructor 
     {
         initComponents();
         setTitle("Connect 4");                          //Add title to top of frame
         jPanel1.setLayout(new BorderLayout());
-
         boardGrid = new BoardGrid();                    //Create BoardGrid
         jPanel1.add(boardGrid, BorderLayout.CENTER);    //Add BoardGrid to JPanel
-        this.isSinglePlayer = singlePlayer;             //Sets GUI playing board for single player mode
+        this.isSinglePlayer = singlePlayer;             //Sets GUI playing board for single player mode 
+    }
+
+    public GUIPlayingBoard(boolean b, String playerName) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     //Button actions
@@ -59,43 +68,17 @@ public class GUIPlayingBoard extends javax.swing.JFrame
         }
     }
     
-//    //Method to disable buttons 
-//    private void disableButtons()
-//    {
-//        Iterable<JButton> Buttons = null;       
-//        for (JButton button : Buttons)
-//        {
-//            button.setEnabled(false);       //Used when the computer is "thinking"
-//        }
-//    }
-//    
-//    //Method to enable buttons for user input 
-//    private void enableButtons()
-//    {
-//        Iterable<JButton> Buttons = null;
-//        for(JButton button : Buttons)
-//        {
-//            button.setEnabled(true);
-//        }
-//    }
-    
     private void AIMove()       //Create a method that handles the movement of the computer 
     {                           //for single player mode
-        //new Thread(() -> {
+        int aiMove;                 
+        Random random = new Random();
         
-            //try 
-            //{
-                //Thread.sleep(1500);         //1.5 second delay caused by threads
-                                            //Simulates to the human user that the ai
-                int aiMove;                 //is "thinking"
-                Random random = new Random();
+        do
+        {
+           aiMove = random.nextInt(7);       //Set move of the computer to a integer between 0 and 6
+        } while (!boardGrid.dropCoin(aiMove, currentPlayer));
         
-            do
-            {
-                aiMove = random.nextInt(7);       //Set move of the computer to a integer between 0 and 6
-            } while (!boardGrid.dropCoin(aiMove, currentPlayer));
-        
-                if (boardGrid.checkWin())
+            if (boardGrid.checkWin())
                 {   
                     //Ai winner print statement 
                     JOptionPane.showMessageDialog(this, "The Computer wins!");
@@ -111,16 +94,9 @@ public class GUIPlayingBoard extends javax.swing.JFrame
                 else 
                 {
                     currentPlayer = 1;      //Switch back to the human player 
-                } 
-            
-        //} catch(InterruptedException e)
-            //{
-                //e.printStackTrace();
-            //}   
-       
-        //}).start();
-        
+                }         
     }
+   
     
 
 
@@ -141,6 +117,9 @@ public class GUIPlayingBoard extends javax.swing.JFrame
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -204,20 +183,46 @@ public class GUIPlayingBoard extends javax.swing.JFrame
             }
         });
 
+        jButton8.setText("Restart");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setText("Quit");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        jButton10.setText("MainMenu");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(220, 220, 220)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,15 +230,22 @@ public class GUIPlayingBoard extends javax.swing.JFrame
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton10)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -242,7 +254,12 @@ public class GUIPlayingBoard extends javax.swing.JFrame
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton8)
+                    .addComponent(jButton9)
+                    .addComponent(jButton10))
+                .addGap(15, 15, 15))
         );
 
         pack();
@@ -301,6 +318,18 @@ public class GUIPlayingBoard extends javax.swing.JFrame
         
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -342,13 +371,17 @@ public class GUIPlayingBoard extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
 
 }

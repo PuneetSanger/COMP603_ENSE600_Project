@@ -13,7 +13,7 @@ public class GUIGame extends JPanel
     {
         //Add BoardGrid to the GUI's layout
         this.setLayout(new BorderLayout());
-        this.add(new BoardGrid(), BorderLayout.CENTER);         //Add BoardGrid to the center of the GUI
+        this.add(new BoardGrid(), BorderLayout.CENTER);         //Add BoardGrid to the center of the JPanel
         this.setSize(700, 600);  //Set the size of the frame
         this.setVisible(true);  //Make the frame visible 
     }    
