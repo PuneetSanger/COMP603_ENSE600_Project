@@ -20,24 +20,37 @@ public class GUIPlayingBoard extends javax.swing.JFrame
     private String player1Name;
     private String player2Name;
     
-    public GUIPlayingBoard(boolean singlePlayer)    
+//    public GUIPlayingBoard(boolean singlePlayer)    
+//    {
+//        initComponents();
+//        setTitle("Connect 4");                          //Add title to top of frame
+//        jPanel1.setLayout(new BorderLayout());
+//        boardGrid = new BoardGrid();                    //Create BoardGrid
+//        jPanel1.add(boardGrid, BorderLayout.CENTER);    //Add BoardGrid to JPanel
+//        this.isSinglePlayer = singlePlayer;             //Sets GUI playing board for single player mode 
+//        this.player1Name = player1Name;
+//        this.player2Name = player2Name;
+//        
+//        System.out.println("Player1 Name:"+ this.player1Name);
+//        System.out.println("Player2Name"+ this.player2Name);
+//    }
+
+    public GUIPlayingBoard(boolean isSinglePlayer, String player1Name, String player2Name)
     {
         initComponents();
         setTitle("Connect 4");                          //Add title to top of frame
         jPanel1.setLayout(new BorderLayout());
         boardGrid = new BoardGrid();                    //Create BoardGrid
         jPanel1.add(boardGrid, BorderLayout.CENTER);    //Add BoardGrid to JPanel
-        this.isSinglePlayer = singlePlayer;             //Sets GUI playing board for single player mode 
-        this.player1Name = player1Name;
-        this.player2Name = player2Name;
-    }
-
-    public GUIPlayingBoard(boolean isSinglePlayer, String player1Name, String player2Name)
-    {
         this.isSinglePlayer = isSinglePlayer;
         this.player1Name = player1Name;
         this.player2Name = player2Name;
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    private String getWinner()
+    {
+        return (currentPlayer == 1) ? player1Name: player2Name;
     }
     
     //Button actions
@@ -47,17 +60,21 @@ public class GUIPlayingBoard extends javax.swing.JFrame
         {
             if (boardGrid.checkWin()) 
             {
-                //Winner print statement 
-                JOptionPane.showMessageDialog(this, "Player " + currentPlayer + " wins!");
+                //Winner print statement            
+                JOptionPane.showMessageDialog(this, getWinner() + " wins!");           
                 boardGrid.resetBoard(); //Reset for new game
             } 
             else if (boardGrid.isBoardFull()) 
             {
                 JOptionPane.showMessageDialog(this, "It's a draw!");    //If board is full print statement
-                boardGrid.resetBoard(); //Reset for new game
+                boardGrid.resetBoard();                                 //Reset for new game
             }
             
-            currentPlayer = (currentPlayer == 1) ? 2 : 1; // Switch turns between the two players
+            else 
+            {
+                currentPlayer = (currentPlayer == 1) ? 2 : 1; // Switch turns between the two players
+            }
+            
             
             if (isSinglePlayer && currentPlayer == 2)
             {
@@ -370,7 +387,7 @@ public class GUIPlayingBoard extends javax.swing.JFrame
             @Override
             public void run() 
             {
-                new GUIPlayingBoard(true).setVisible(true);
+                new GUIPlayingBoard(true,"Player 1", "Player 2").setVisible(true);
             }
         });
     }
