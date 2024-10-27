@@ -20,7 +20,7 @@ public class GUIPlayingBoard extends javax.swing.JFrame
     private String player1Name;
     private String player2Name;
     
-    public GUIPlayingBoard(boolean singlePlayer)    //Pass single player player boolean through the constructor 
+    public GUIPlayingBoard(boolean singlePlayer)    
     {
         initComponents();
         setTitle("Connect 4");                          //Add title to top of frame
@@ -28,6 +28,8 @@ public class GUIPlayingBoard extends javax.swing.JFrame
         boardGrid = new BoardGrid();                    //Create BoardGrid
         jPanel1.add(boardGrid, BorderLayout.CENTER);    //Add BoardGrid to JPanel
         this.isSinglePlayer = singlePlayer;             //Sets GUI playing board for single player mode 
+        this.player1Name = player1Name;
+        this.player2Name = player2Name;
     }
 
     public GUIPlayingBoard(boolean b, String playerName) {
