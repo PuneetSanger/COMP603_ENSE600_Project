@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 /**
  *  This class creates the user name input for the single player
- *  game mode
+ *  and two player game mode
  */
 public class PlayerInputDialog extends JDialog 
 {

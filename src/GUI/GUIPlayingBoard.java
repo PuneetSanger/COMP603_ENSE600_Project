@@ -44,12 +44,23 @@ public class GUIPlayingBoard extends javax.swing.JFrame
         jPanel1.add(boardGrid, BorderLayout.CENTER);    //Add BoardGrid to JPanel
         this.isSinglePlayer = isSinglePlayer;
         this.player1Name = player1Name;
-        this.player2Name = player2Name;
+        //this.player2Name = player2Name;
+        
+        //Set player 2 name to computer during single player mode
+        this.player2Name = isSinglePlayer ? "Computer" : player2Name;
+        
+        //Debugging statements 
+        System.out.println("Player1 Name: " + player1Name);
+        System.out.println("Player2Name: "+ player2Name);
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     private String getWinner()
     {
+        if(isSinglePlayer && currentPlayer == 2)
+        {
+            return player2Name;
+        }
         return (currentPlayer == 1) ? player1Name: player2Name;
     }
     
