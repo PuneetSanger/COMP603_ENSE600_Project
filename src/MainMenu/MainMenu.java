@@ -2,10 +2,10 @@ package MainMenu;
 
 import GUI.BoardGrid;
 import GUI.GUIPlayingBoard;
+import GUI.PlayerInputDialog;
 
 public class MainMenu extends javax.swing.JFrame 
 {
-
     /**
      * Creates new form Connect4GUI
      */
@@ -13,6 +13,8 @@ public class MainMenu extends javax.swing.JFrame
     {
         initComponents();
         setTitle("Connect 4! Main Menu");
+        
+        
     }
 
     /**
@@ -72,14 +74,14 @@ public class MainMenu extends javax.swing.JFrame
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(412, 412, 412)
+                .addGap(500, 500, 500)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TwoPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LeaderboardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
-                .addContainerGap(516, Short.MAX_VALUE))
+                .addContainerGap(500, Short.MAX_VALUE))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {LeaderboardButton, TwoPlayer, jButton1, jButton2});
@@ -87,8 +89,8 @@ public class MainMenu extends javax.swing.JFrame
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(133, 133, 133)
-                .addComponent(jLabel1)
+                .addGap(111, 111, 111)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -97,7 +99,7 @@ public class MainMenu extends javax.swing.JFrame
                 .addComponent(LeaderboardButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(283, Short.MAX_VALUE))
+                .addContainerGap(280, Short.MAX_VALUE))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {LeaderboardButton, TwoPlayer, jButton1, jButton2});
@@ -124,18 +126,46 @@ public class MainMenu extends javax.swing.JFrame
 
     private void singlePlayerButtonPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_singlePlayerButtonPressed
         // TODO add your handling code here:
-        GUIPlayingBoard game = new GUIPlayingBoard(true);   //Set GUIPlayingBoard to true for single player 
-        game.setVisible(true);          //Set game to visible 
-        this.dispose();                 //Close the main menu screen
+        //PlayerInputDialog dialog = new PlayerInputDialog(this, false); //New instance
+        PlayerInputDialog dialog = new PlayerInputDialog(this,true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);                               //Set the panel to visible
+        String player1Name = dialog.getPlayer1Name();          //Get player 1 name
+        String player2Name = "Computer";
+        
+        if(player1Name!= null)                               //If player is not null then create the GUIPlaying board
+        {
+            //GUIPlayingBoard game = new GUIPlayingBoard(true, "Player 1", "Player 2");   //Set GUIPlayingBoard to true for single player 
+            GUIPlayingBoard game = new GUIPlayingBoard(true, player1Name, player2Name);
+            game.setLocationRelativeTo(null);
+            game.setVisible(true);          //Set game to visible 
+            this.dispose();                 //Close the main menu screen
+        }   
     }//GEN-LAST:event_singlePlayerButtonPressed
 
     private void quitButtonPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonPressed
-        System.exit(0);
+        System.exit(0);                     //Exit application when quit button is pressed
     }//GEN-LAST:event_quitButtonPressed
 
     private void TwoPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TwoPlayerActionPerformed
         // TODO add your handling code here:
-        GUIPlayingBoard game = new GUIPlayingBoard(false);      //New GUIPlayingBoard game, false for two player mode
+        PlayerInputDialog dialog = new PlayerInputDialog(this, true);   //Set true for two player mode
+        dialog.setLocationRelativeTo(null);                             //Set locatiion
+        dialog.setVisible(true);                                        //Set player input panel to visible
+        
+        //Get methods for user name dialog 
+        String player1Name = dialog.getPlayer1Name();           //Get player 1 name 
+        String player2Name = dialog.getPlayer2Name();           //Get player 2 name
+        
+        /*
+            GetWinner method not working currently. Debugging statements to see where 
+            the issue lies
+        */
+        
+//        System.out.println("Player 1 Name: "+ player1Name);
+//        System.out.println("Player 2 Name: "+ player2Name);
+        GUIPlayingBoard game = new GUIPlayingBoard(false, player1Name, player2Name);      //New GUIPlayingBoard game, false for two player mode
+        game.setLocationRelativeTo(null);
         game.setVisible(true);                                  //Set the game to visible
         this.dispose();                                         //Close the current main menu  
     }//GEN-LAST:event_TwoPlayerActionPerformed
@@ -177,7 +207,10 @@ public class MainMenu extends javax.swing.JFrame
         {
             public void run() 
             {
-                new MainMenu().setVisible(true);
+                MainMenu menu = new MainMenu();
+                //new MainMenu().setVisible(true);
+                menu.setVisible(true);
+                menu.setLocationRelativeTo(null);
             }
         });
     }
@@ -190,4 +223,5 @@ public class MainMenu extends javax.swing.JFrame
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+ 
 }

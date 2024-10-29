@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * This is the DBManager class. This class is used to set up the embedded database.
+ * Most of the code estbalished in this class comes directly from the week 8 lab
  */
 package Database;
 
@@ -14,12 +14,13 @@ import java.sql.Statement;
 
 public final class DBManager 
 {
-    private static final String USERNAME = "pdc";      //DB username   Week 8 lab
+    private static final String USERNAME = "pdc";       //DB username   Week 8 lab
     private static final String PASSWORD = "pdc";       //DB password 
-    
-    //Fill later 
-    private static final String URL = "";        //URL of host
-    
+    private static final String URL = "jdc:derby:LeaderBoardDB_Ebd; create=true";   //URL of host, embedded database
+    /*
+        When you call eg DBManager.getconnection(URL, username, password), derby will connect to leaderboard. If this
+        database does not already exist, the create=true; statement will create it
+    */
     Connection conn;
     
     public DBManager()
