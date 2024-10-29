@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * This class uses the counter class to create the board grid. This class also contains
+ * methods that relate to the board grid functionality
  */
 package GUI;
 

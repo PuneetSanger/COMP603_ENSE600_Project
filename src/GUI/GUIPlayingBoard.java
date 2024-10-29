@@ -10,7 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-
+/*
+    This class creates the playing board for the connect 4 by adding the board grid to
+    a jpanel. This class also handles the actions on the buttons alongside the ai
+    move method
+*/
 
 public class GUIPlayingBoard extends javax.swing.JFrame 
 {

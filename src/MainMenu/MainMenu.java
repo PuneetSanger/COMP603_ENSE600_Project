@@ -4,6 +4,10 @@ import GUI.BoardGrid;
 import GUI.GUIPlayingBoard;
 import GUI.PlayerInputDialog;
 
+/*
+    This is the main menu class. It is the main class that will be run. 
+*/
+
 public class MainMenu extends javax.swing.JFrame 
 {
     /**

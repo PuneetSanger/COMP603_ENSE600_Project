@@ -26,6 +26,7 @@ public class PlayerInputDialog extends JDialog
         super(parent, "Enter Player Name:", true);      //Enter a name for single player
         this.isTwoPlayerMode = isTwoPlayerMode;
         initializeSinglePlayerComponents();
+        setTitle("Connect 4: Player Names");            //Set title for panel
     }
 
     //Method for single player name input 
@@ -47,7 +48,7 @@ public class PlayerInputDialog extends JDialog
             
             if(isTwoPlayerMode)
             {
-                player2Name = player2NameField.getText();
+                player2Name = player2NameField.getText();       //Get player 2 name 
             }
             dispose();     //Close the dialog
         });
