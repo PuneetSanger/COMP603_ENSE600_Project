@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -19,7 +18,7 @@ public class PlayerInputDialog extends JDialog
     private JButton startGameButton;
     private String player1Name;
     private String player2Name;
-    private boolean isTwoPlayerMode;
+    private final boolean isTwoPlayerMode;
 
     public PlayerInputDialog(JFrame parent, boolean isTwoPlayerMode) 
     {
@@ -43,7 +42,7 @@ public class PlayerInputDialog extends JDialog
         }
         
         //Start button
-        startGameButton.addActionListener(e -> {
+            startGameButton.addActionListener(e -> {
             player1Name = player1NameField.getText();
             
             if(isTwoPlayerMode)

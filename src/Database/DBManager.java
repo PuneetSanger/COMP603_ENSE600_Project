@@ -21,7 +21,7 @@ public final class DBManager
         When you call eg DBManager.getconnection(URL, username, password), derby will connect to leaderboard. If this
         database does not already exist, the create=true; statement will create it
     */
-    Connection conn;
+    private Connection conn;
     
     public DBManager()
     {
@@ -37,7 +37,7 @@ public final class DBManager
     
     public Connection getConnection()
     {
-        return this.conn;                       
+        return this.getConn();                       
     }
 
     //Establish connection
@@ -46,7 +46,7 @@ public final class DBManager
         //Establish a connection to the database
         try
         {
-            conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            setConn(DriverManager.getConnection(URL, USERNAME, PASSWORD));
             System.out.println(URL + "connected...");         //Print statement 
         }
         
@@ -59,11 +59,11 @@ public final class DBManager
     
     public void closeConnections()
     {
-        if(conn != null)
+        if(getConn() != null)
         {
             try 
             {
-                conn.close();
+                getConn().close();
             }
             
             catch (SQLException ex)
@@ -75,7 +75,7 @@ public final class DBManager
     
     public ResultSet queryDB(String sql)
     {
-        Connection connection = this.conn;
+        Connection connection = this.getConn();
         Statement statement = null;
         ResultSet resultSet = null;
         
@@ -95,7 +95,7 @@ public final class DBManager
     
     public void UpdateDB(String sql)
     {
-        Connection connection = this.conn;
+        Connection connection = this.getConn();
         Statement statement = null;
         ResultSet resultSet = null;
         
@@ -109,6 +109,20 @@ public final class DBManager
         {
             System.out.println(ex.getMessage());
         }
+    }
+
+    /**
+     * @return the conn
+     */
+    public Connection getConn() {
+        return conn;
+    }
+
+    /**
+     * @param conn the conn to set
+     */
+    public void setConn(Connection conn) {
+        this.conn = conn;
     }
 }
    

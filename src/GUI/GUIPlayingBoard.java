@@ -2,13 +2,8 @@ package GUI;
 
 import MainMenu.MainMenu;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.Random;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /*
     This class creates the playing board for the connect 4 by adding the board grid to
@@ -19,11 +14,11 @@ import javax.swing.JPanel;
 public class GUIPlayingBoard extends javax.swing.JFrame 
 {
 
-    private BoardGrid boardGrid;
+    private final BoardGrid boardGrid;
     private int currentPlayer = 1;                  //Player 1 starts
     private boolean isSinglePlayer = false;         //Create AI player just like in assignment 1
-    private String player1Name;
-    private String player2Name;
+    private final String player1Name;
+    private final String player2Name;
     
 //    public GUIPlayingBoard(boolean singlePlayer)    
 //    {
