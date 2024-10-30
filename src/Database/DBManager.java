@@ -10,13 +10,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 
 public final class DBManager 
 {
     private static final String USERNAME = "pdc";       //DB username   Week 8 lab
     private static final String PASSWORD = "pdc";       //DB password 
-    private static final String URL = "jdc:derby:LeaderBoardDB_Ebd; create=true";   //URL of host, embedded database
+    private static final String URL = "jdbc:derby:LeaderBoardDB_Ebd; create=true";   //URL of host, embedded database
     /*
         When you call eg DBManager.getconnection(URL, username, password), derby will connect to leaderboard. If this
         database does not already exist, the create=true; statement will create it
@@ -46,8 +47,14 @@ public final class DBManager
         //Establish a connection to the database
         try
         {
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
             setConn(DriverManager.getConnection(URL, USERNAME, PASSWORD));
             System.out.println(URL + "connected...");         //Print statement 
+        }
+        catch(ClassNotFoundException e)
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Database  Driver Error:" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         
         catch (SQLException ex)
@@ -124,5 +131,22 @@ public final class DBManager
     public void setConn(Connection conn) {
         this.conn = conn;
     }
+    
+    public boolean testConnection() {
+    try {
+        // Check if connection is valid
+        if (conn != null && conn.isValid(2)) { // 2 seconds timeout for validity check
+            System.out.println("Connection is valid.");
+            return true;
+        } else {
+            System.out.println("Connection is not valid.");
+            return false;
+        }
+    } catch (SQLException e) {
+        System.out.println("Error testing connection: " + e.getMessage());
+        return false;
+    }
+}
+
 }
    

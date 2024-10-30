@@ -1,26 +1,18 @@
-///*
-// * 
-// * 
-// */
-//package Database;
-//
-//
-//import com.sun.jdi.connect.spi.Connection;
-//import java.sql.Statement;
-//
-///**
-// *  
-// * 
-// */
-//public class Leaderboard 
-//{
-//    private final DBManager dbManager;
-//    private Connection conn;
-//    private Statement statement;
-//    
-//    public Leaderboard()
-//    {
-//        dbManager = new DBManager();
-//        conn = dbManager.getConnection();
-//    }
-//}
+
+package Database;
+import java.sql.Connection;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author puneetsanger
+ */
+public class Leaderboard 
+{
+    
+}
