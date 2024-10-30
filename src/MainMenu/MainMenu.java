@@ -213,7 +213,7 @@ public class MainMenu extends javax.swing.JFrame
                 MainMenu menu = new MainMenu();
                 //new MainMenu().setVisible(true);
                 menu.setVisible(true);
-                menu.setLocationRelativeTo(null);
+                menu.setLocationRelativeTo(null); //testing
             }
         });
     }
