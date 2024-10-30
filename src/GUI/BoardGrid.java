@@ -1,10 +1,5 @@
-/*
- * This class uses the counter class to create the board grid. This class also contains
- * methods that relate to the board grid functionality
- */
 package GUI;
 
-import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.JPanel;

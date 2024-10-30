@@ -3,10 +3,6 @@ package GUI;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
-/**
- *  This class adds the board grid to the JPanel
- * 
- */
 public class GUIGame extends JPanel 
 {
     public GUIGame()

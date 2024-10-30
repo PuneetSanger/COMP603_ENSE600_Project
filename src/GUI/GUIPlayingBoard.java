@@ -1,103 +1,141 @@
 package GUI;
 
+import Database.PlayerStats;
 import MainMenu.MainMenu;
 import java.awt.BorderLayout;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 import javax.swing.JOptionPane;
-
-/*
-    This class creates the playing board for the connect 4 by adding the board grid to
-    a jpanel. This class also handles the actions on the buttons alongside the ai
-    move method
-*/
+import java.util.HashMap;
+import java.util.Map;
 
 public class GUIPlayingBoard extends javax.swing.JFrame 
 {
-
     private final BoardGrid boardGrid;
-    private int currentPlayer = 1;                  //Player 1 starts
-    private boolean isSinglePlayer = false;         //Create AI player just like in assignment 1
+    private int currentPlayer = 1;                  // Player 1 starts
+    private boolean isSinglePlayer = false;         // Create AI player just like in assignment 1
     private final String player1Name;
     private final String player2Name;
-    
-//    public GUIPlayingBoard(boolean singlePlayer)    
-//    {
-//        initComponents();
-//        setTitle("Connect 4");                          //Add title to top of frame
-//        jPanel1.setLayout(new BorderLayout());
-//        boardGrid = new BoardGrid();                    //Create BoardGrid
-//        jPanel1.add(boardGrid, BorderLayout.CENTER);    //Add BoardGrid to JPanel
-//        this.isSinglePlayer = singlePlayer;             //Sets GUI playing board for single player mode 
-//        this.player1Name = player1Name;
-//        this.player2Name = player2Name;
-//        
-//        System.out.println("Player1 Name:"+ this.player1Name);
-//        System.out.println("Player2Name"+ this.player2Name);
-//    }
 
-    public GUIPlayingBoard(boolean isSinglePlayer, String player1Name, String player2Name)
+    // Removed the redundant declaration of leaderboardData
+    private final HashMap<String, PlayerStats> leaderboardData; // To keep track of wins and losses
+    private final String leaderboardFileName = "Leaderboard.txt";
+
+    public GUIPlayingBoard(boolean isSinglePlayer, String player1Name, String player2Name) 
     {
         initComponents();
-        setTitle("Connect 4");                          //Add title to top of frame
+        setTitle("Connect 4");                          // Add title to top of frame
         jPanel1.setLayout(new BorderLayout());
-        boardGrid = new BoardGrid();                    //Create BoardGrid
-        jPanel1.add(boardGrid, BorderLayout.CENTER);    //Add BoardGrid to JPanel
+        boardGrid = new BoardGrid();                    // Create BoardGrid
+        jPanel1.add(boardGrid, BorderLayout.CENTER);    // Add BoardGrid to JPanel
         this.isSinglePlayer = isSinglePlayer;
         this.player1Name = player1Name;
-        //this.player2Name = player2Name;
         
-        //Set player 2 name to computer during single player mode
+        // Set player 2 name to computer during single player mode
         this.player2Name = isSinglePlayer ? "Computer" : player2Name;
-        
-        //Debugging statements 
-        System.out.println("Player1 Name: " + player1Name);
-        System.out.println("Player2Name: "+ player2Name);
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        leaderboardData = new HashMap<>();
+        leaderboardData.put(player1Name, new PlayerStats(player1Name,0, 0)); 
+        leaderboardData.put(player2Name, new PlayerStats(player2Name, 0, 0));
+
+        // Debugging statements 
+        System.out.println("Player 1 Name: " + player1Name);
+        System.out.println("Player 2 Name: " + player2Name);
     }
     
-    private String getWinner()
+    private String getWinner() 
     {
-        if(isSinglePlayer && currentPlayer == 2)
+        if (isSinglePlayer && currentPlayer == 2) 
         {
             return player2Name;
         }
-        return (currentPlayer == 1) ? player1Name: player2Name;
+        return (currentPlayer == 1) ? player1Name : player2Name;
+    }
+
+    private String getLoser() 
+    {
+        return (currentPlayer == 1) ? player2Name : player1Name; // Added method to retrieve loser
     }
     
-    //Button actions
+    private void updateLeaderboard(String winner) 
+    {
+        String loser = getLoser(); // Get the loser
+
+        // Update wins for the winner
+        if (winner != null) 
+        {
+            PlayerStats winnerScore = leaderboardData.get(winner);
+            if (winnerScore != null) 
+            {
+                winnerScore.incrementWins(); // Increment wins
+            }
+        }
+
+        // Update losses for the loser
+        if (loser != null) 
+        {
+            PlayerStats loserScore = leaderboardData.get(loser);
+            if (loserScore != null) 
+            {
+                loserScore.incrementLosses(); // Increment losses
+            }
+        }
+
+        // Write to the leaderboard file
+        writeLeaderboardToFile();
+    }
+    
+    private void writeLeaderboardToFile() 
+    {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(leaderboardFileName))) 
+        {
+            for (Map.Entry<String, PlayerStats> entry : leaderboardData.entrySet()) 
+            {
+                String player = entry.getKey();
+                PlayerStats scores = entry.getValue();
+                writer.write(player + "," + scores.getWins() + "," + scores.getLosses()); // Name, Wins, Losses
+                writer.newLine();
+            }
+        } 
+        catch (IOException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Error writing to leaderboard file: " + e.getMessage());
+        }
+    }
+    
     private void handleButtonAction(int col) 
     {
         if (boardGrid.dropCoin(col, currentPlayer)) 
         {
             if (boardGrid.checkWin()) 
             {
-                //Winner print statement            
-                JOptionPane.showMessageDialog(this, getWinner() + " wins!");           
-                boardGrid.resetBoard(); //Reset for new game
+                String winner = getWinner();
+                JOptionPane.showMessageDialog(this, winner + " wins!");
+                updateLeaderboard(winner); // Update leaderboard
+                boardGrid.resetBoard(); // Reset for new game
+                currentPlayer = 1; // Reset to Player 1
             } 
             else if (boardGrid.isBoardFull()) 
             {
-                JOptionPane.showMessageDialog(this, "It's a draw!");    //If board is full print statement
-                boardGrid.resetBoard();                                 //Reset for new game
-            }
-            
+                JOptionPane.showMessageDialog(this, "It's a draw!");
+                updateLeaderboard(null); // Update leaderboard for draw
+                boardGrid.resetBoard(); // Reset for new game
+                currentPlayer = 1; // Reset to Player 1
+            } 
             else 
             {
-                currentPlayer = (currentPlayer == 1) ? 2 : 1; // Switch turns between the two players
+                currentPlayer = (currentPlayer == 1) ? 2 : 1; // Switch turns
             }
-            
-            
-            if (isSinglePlayer && currentPlayer == 2)
+
+            if (isSinglePlayer && currentPlayer == 2) 
             {
-                //disableButtons();   //Disable buttons so user cannot input before the computer 
-                AIMove();           //Trigger a move from the ai when in single player
+                AIMove(); // Trigger AI move
             }
-            
-            //enableButtons();
         } 
         else 
         {
-            //Column is full print statement 
             JOptionPane.showMessageDialog(this, "Column full! Choose another one.");
         }
     }
@@ -110,35 +148,26 @@ public class GUIPlayingBoard extends javax.swing.JFrame
         do
         {
            aiMove = random.nextInt(7);       //Set move of the computer to a integer between 0 and 6
-        } while (!boardGrid.dropCoin(aiMove, currentPlayer));
+        } 
+        while (!boardGrid.dropCoin(aiMove, currentPlayer));
         
             if (boardGrid.checkWin())
-                {   
-                    //Ai winner print statement 
-                    JOptionPane.showMessageDialog(this, "The Computer wins!");
-                    boardGrid.resetBoard();     //Reset for new game    
-                }
-        
-                else if (boardGrid.isBoardFull())
-                {
-                    JOptionPane.showMessageDialog(this, "It's a draw!");    //If board is full print statement
-                    boardGrid.resetBoard(); //Reset for new game
-                }
-        
-                else 
-                {
-                    currentPlayer = 1;      //Switch back to the human player 
-                }         
+            {   
+                //Ai winner print statement 
+                JOptionPane.showMessageDialog(this, "The Computer wins!");
+                boardGrid.resetBoard();     //Reset for new game    
+            }
+            else if (boardGrid.isBoardFull())
+            {
+                JOptionPane.showMessageDialog(this, "It's a draw!");    //If board is full print statement
+                boardGrid.resetBoard(); //Reset for new game
+            }
+            else 
+            {
+                currentPlayer = 1;      //Switch back to the human player 
+            }         
     }
-   
-    
 
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -300,80 +329,48 @@ public class GUIPlayingBoard extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        //Counter counter = new Counter();
-//        ActionListener listener = new MyActionListener(counter);
-//        jButton1.addActionListener(listener);   
-//        jPanel1.add(counter);  // Add the counter to the panel so it's visible
-//        jPanel1.revalidate();  // Refresh the panel
-//        jPanel1.repaint();
-//        
-        //jButton1.addActionListener(MyActionListener);
-        handleButtonAction(0);
-       
+        handleButtonAction(0); 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        //System.out.println("Button 2 has been pressed");
         handleButtonAction(1);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        //System.out.println("Button 3 has been pressed");
         handleButtonAction(2);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        //System.out.println("Button 4 has been pressed");
         handleButtonAction(3);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        //ystem.out.println("Button 5 has been pressed");
-        handleButtonAction(4);
-       
+        handleButtonAction(4);      
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-        //System.out.println("Button 6 has been pressed");
-        handleButtonAction(5);
-        
+        handleButtonAction(5);       
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-        //System.out.println("Button 7 has been pressed");
-        handleButtonAction(6);
-        
+        handleButtonAction(6);    
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void RestartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestartActionPerformed
-        // TODO add your handling code here:
-        boardGrid.resetBoard();             //This method resets the board
-        
+        boardGrid.resetBoard();     //This method resets the board     
     }//GEN-LAST:event_RestartActionPerformed
 
     private void QuitButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuitButton
-        // TODO add your handling code here:
         System.exit(0);         //Quit the application
     }//GEN-LAST:event_QuitButton
 
     private void MainMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MainMenuActionPerformed
-        // TODO add your handling code here:
         this.dispose();                         //This closes the GUI playing board. 
         MainMenu menu = new MainMenu();         //This allows the user to return
         menu.setVisible(true);                  //to the main menu after pressing
         menu.setLocationRelativeTo(null);       //the button.
     }//GEN-LAST:event_MainMenuActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) 
     {
         /* Set the Nimbus look and feel */
@@ -409,7 +406,7 @@ public class GUIPlayingBoard extends javax.swing.JFrame
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton MainMenu;
     private javax.swing.JButton Restart;
@@ -423,6 +420,4 @@ public class GUIPlayingBoard extends javax.swing.JFrame
     private javax.swing.JButton jButton9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
-
 }

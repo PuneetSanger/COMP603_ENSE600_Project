@@ -1,7 +1,3 @@
-/*
- * This class contains the game logic. It contains the drop counter method
- * that updates the board. It also contains the various methods on winning the game 
- */
 package GUI;
 
 public class Connect4Board 
@@ -35,8 +31,7 @@ public class Connect4Board
 
     //Check for win
     public boolean checkWin() 
-    {
-        
+    { 
         return checkHorizontalWin() || checkVerticalWin() || checkDiagonalWin();
     }
     

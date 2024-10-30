@@ -5,10 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
-/**
- * This class creates the Counter that will be further used to create the board grid
- * 
- */
 public class Counter extends JPanel
 {
     private final int player;
@@ -21,10 +17,6 @@ public class Counter extends JPanel
         this.setBackground(Color.BLUE);             //Set colour of background to be blue 
         setPreferredSize(new Dimension(100,100));   //Set size for the counter        
     }
-
-//    Counter() {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//    }
     
     @Override 
     protected void paintComponent(Graphics g)           //Override the paint compoennt and draw the counter as a disk

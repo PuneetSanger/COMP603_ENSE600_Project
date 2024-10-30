@@ -121,32 +121,45 @@ public final class DBManager
     /**
      * @return the conn
      */
-    public Connection getConn() {
+    public Connection getConn() 
+    {
         return conn;
     }
 
     /**
      * @param conn the conn to set
      */
-    public void setConn(Connection conn) {
+    public void setConn(Connection conn) 
+    {
         this.conn = conn;
     }
     
-    public boolean testConnection() {
-    try {
+    public boolean testConnection() 
+    {
+    try 
+    {
         // Check if connection is valid
         if (conn != null && conn.isValid(2)) { // 2 seconds timeout for validity check
             System.out.println("Connection is valid.");
             return true;
-        } else {
+        } 
+        else 
+        {
             System.out.println("Connection is not valid.");
             return false;
         }
-    } catch (SQLException e) {
+    } 
+    catch (SQLException e) 
+    {
         System.out.println("Error testing connection: " + e.getMessage());
         return false;
     }
 }
+
+    void updateDB(String sqlInsertRecords) 
+    {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }
    
